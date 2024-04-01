@@ -1,0 +1,34 @@
+def calculate_symbol_frequencies(text):
+    total_symbols = len(text)
+    symbol_frequencies = {}
+    for char in text:
+        if char in symbol_frequencies:
+            symbol_frequencies[char] += 1
+        else:
+            symbol_frequencies[char] = 1
+    for symbol in symbol_frequencies:
+        symbol_frequencies[symbol] /= total_symbols
+    return symbol_frequencies
+
+def calculate_index_of_coincidence(symbol_frequencies):
+    theoretical_ic = 0.055  # for Russian language
+    observed_ic = sum(freq**2 for freq in symbol_frequencies.values())
+    return observed_ic / (1/33)
+
+# Прочитайте текст із файлу чи будь-якого джерела і використайте його для розрахунків
+text_with_spaces = "Тут ваш текст з пробілами"
+text_without_spaces = text_with_spaces.replace(" ", "")
+
+# Обчислити частоти символів з пробілами та без пробілів
+symbol_frequencies_with_spaces = calculate_symbol_frequencies(text_with_spaces)
+symbol_frequencies_without_spaces = calculate_symbol_frequencies(text_without_spaces)
+
+# Вивести результати у вигляді таблиць
+print("Частоти символів з пробілами:")
+print("{:<10} {:<10}".format("Символ", "Частота"))
+for symbol, frequency in symbol_frequencies_with_spaces.items():
+    print("{:<10} {:<10}".format(symbol, frequency))
+print("\nЧастоти символів без пробілів:")
+print("{:<10} {:<10}".format("Символ", "Частота"))
+for symbol, frequency in symbol_frequencies_without_spaces.items():
+    print("{:<10} {:<10}".format(symbol, frequency))

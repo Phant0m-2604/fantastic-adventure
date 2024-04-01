@@ -1,0 +1,31 @@
+# -*- coding: utf-8 -*-
+
+import re
+
+def filter_text(text, alphabet, keep_spaces=False):
+    filtered_text = ""
+    for char in text:
+        if char in alphabet or (keep_spaces and char.isspace()):
+            filtered_text += char.lower() if char.isupper() and not keep_spaces else char
+    return filtered_text
+
+def filter_text_with_space(text, alphabet):
+    return filter_text(text, alphabet, keep_spaces=True)
+
+def filter_text_without_space(text, alphabet):
+    filtered_text = filter_text(text, alphabet)
+    filtered_text = re.sub(r'\s+', ' ', filtered_text)
+    filtered_text = filtered_text.strip()
+    return filtered_text
+
+# Define the Ukrainian alphabet
+ukrainian_alphabet = "АаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщьЮюЯя"
+
+# Example usage
+text = "1. Слава Україні! 2. Героям Слава!!"
+
+filtered_text_with_space = filter_text_with_space(text, ukrainian_alphabet)
+filtered_text_without_space = filter_text_without_space(text, ukrainian_alphabet)
+
+print("Filtered text with spaces:", filtered_text_with_space)
+print("Filtered text without spaces:", filtered_text_without_space)

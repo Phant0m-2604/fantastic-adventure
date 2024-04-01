@@ -1,0 +1,45 @@
+def calculate_char_frequencies(text, include_space):
+    frequencies = {}
+    for c in text:
+        if not c.isspace() or include_space:
+            frequencies[c] = frequencies.get(c, 0) + 1
+    return frequencies
+
+def calculate_bigram_frequencies(text, include_space, overlap):
+    frequencies = {}
+    step = 1 if overlap else 2
+    for i in range(0, len(text) - 1, step):
+        c1 = text[i]
+        c2 = text[i + 1]
+        if (not c1.isspace() and not c2.isspace()) or include_space:
+            bigram = c1 + c2
+            frequencies[bigram] = frequencies.get(bigram, 0) + 1
+    return frequencies
+
+def print_frequencies(frequencies):
+    for key, value in frequencies.items():
+        print(f"{key}: {value}")
+
+if __name__ == "__main__":
+    text = input("Введите текст:\n")
+
+    char_freqs_with_space = calculate_char_frequencies(text, True)
+    char_freqs_no_space = calculate_char_frequencies(text, False)
+
+    bigram_freqs_with_space_overlap = calculate_bigram_frequencies(text, True, True)
+    bigram_freqs_with_space_no_overlap = calculate_bigram_frequencies(text, True, False)
+    bigram_freqs_no_space_with_overlap = calculate_bigram_frequencies(text, False, True)
+    bigram_freqs_no_space_no_overlap = calculate_bigram_frequencies(text, False, False)
+
+    print("Частоты символов с пробелами:")
+    print_frequencies(char_freqs_with_space)
+    print("\nЧастоты символов без пробелов:")
+    print_frequencies(char_freqs_no_space)
+    print("\nЧастоты биграмм с пробелами (с пересечением):")
+    print_frequencies(bigram_freqs_with_space_overlap)
+    print("\nЧастоты биграмм с пробелами (без пересечения):")
+    print_frequencies(bigram_freqs_with_space_no_overlap)
+    print("\nЧастоты биграмм без пробелов (с пересечением):")
+    print_frequencies(bigram_freqs_no_space_with_overlap)
+    print("\nЧастоты биграмм без пробелов (без пересечения):")
+    print_frequencies(bigram_freqs_no_space_no_overlap)
